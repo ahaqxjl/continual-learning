@@ -108,3 +108,48 @@ HR0011-18-2-0025 and by the Intelligence Advanced Research Projects Activity (IA
 Interior/Interior Business Center (DoI/IBC) contract number D16PC00003. Disclaimer: views and conclusions 
 contained herein are those of the authors and should not be interpreted as necessarily representing the official
 policies or endorsements, either expressed or implied, of DARPA, IARPA, DoI/IBC, or the U.S. Government.
+
+
+## 运行代码注意事项
+
+conda环境
+
+pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
+
+如果下载太慢，就用下面的命令
+
+conda create -n testIL --clone other_env_with_pytorch_1.7
+
+conda install pandas
+
+conda install -c conda-forge visdom
+
+
+
+坑1. torchvision安装不上
+
+需要用conda install pytorch=1.1.0 torchvision==0.2.2 -c pytorch安装
+
+
+
+坑2. visdom用conda装不上
+
+需要用conda install -c conda-forge visdom
+
+
+
+坑3. RuntimeError: cublas runtime error : the GPU program failed to execute at /opt/conda/conda-bld/pytorch_1556653114079/work/aten/src/THC/THCBlas.cu:259
+
+可能是cuda版本不对，安装cuda11对应的包，于是换成了conda install pytorch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 cudatoolkit=11.0 -c pytorch
+
+
+
+坑4. 坑3解决后遇到symbol free_gemm_select version libcublasLt.so.11 not defined in file libcublasLt.so.11 with link time reference
+
+需要用pip安装，不能用conda安装
+
+
+
+坑5. pip安装pytorch太慢
+
+看缘分，有玄学。可以用其他已经有pytorch的环境clone
